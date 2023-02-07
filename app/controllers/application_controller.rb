@@ -4,4 +4,5 @@ class ApplicationController < ActionController::Base
     render html: "hello this is the beginning of sample app."
   end
 =end
+  include SessionsHelper
 end
