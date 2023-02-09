@@ -3,6 +3,7 @@ module SessionsHelper
   # login with the passed in user
   def log_in(user)
     session[:user_id] = user.id
+    session[:session_token] = user.session_token
   end
 
   # save user to database for permanent session
@@ -15,7 +16,10 @@ module SessionsHelper
   # return user mapped by memory token from cookie
   def current_user
     if (user_id = session[:user_id])
-      @current_user ||= User.find_by(id: user_id)
+      user = User.find_by(id: user_id)
+      if user && session[:session_token] == user.session_token
+        @current_user = user
+      end
     elsif (user_id = cookies.encrypted[:user_id])
       user = User.find_by(id: user_id)
       if user && user.authenticated?(cookies[:remember_token])
