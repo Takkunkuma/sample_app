@@ -10,7 +10,9 @@ class UserMailerPreview < ActionMailer::Preview
 
   # Preview this email at http://779e139e58414807861c204bd678f5a3.vfs.cloud9.us-west-1.amazonaws.com/rails/mailers/user_mailer/password_reset
   def password_reset
-    UserMailer.password_reset
+    user = User.first
+    user.reset_token = User.new_token
+    UserMailer.password_reset(user)
   end
 
 end

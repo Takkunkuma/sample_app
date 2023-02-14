@@ -2,7 +2,7 @@ class PasswordResetsController < ApplicationController
   def new
   end
 
-  def creeate
+  def create
     @user = User.find_by(email: params[:password_reset][:email].downcase)
     if @user
       @user.create_reset_digest
@@ -11,7 +11,7 @@ class PasswordResetsController < ApplicationController
       redirect_to root_url
     else
       flash.now[:danger] = "Email address not found"
-      render 'new', status: :unprocessale_entity
+      render 'new', status: :unprocessable_entity
     end
   end
 
