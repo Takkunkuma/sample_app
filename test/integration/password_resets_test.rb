@@ -96,11 +96,13 @@ class PasswordUpdateTest < PasswordResetForm
     assert_redirected_to @reset_user
   end
 end
+
 class ExpiredToken < PasswordResets
 
   def setup
     super
     # パスワードリセットのトークンを作成する
+    @user = users(:michael)
     post password_resets_path,
          params: { password_reset: { email: @user.email } }
     @reset_user = assigns(:user)
