@@ -110,6 +110,12 @@ class UserTest < ActiveSupport::TestCase
       assert michael.feed.include?(post_following)
     end
 
+    # self feed when there exists followers
+    michael.microposts.each do |post_self|
+      assert michael.feed.include?(post_self)
+      assert_equal michael.feed.distinct, michael.feed
+    end
+
     # self feed
     michael.microposts.each do |post_self|
       assert michael.feed.include?(post_self)
